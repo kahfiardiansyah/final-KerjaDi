@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard - KerjaDi Clone</title>
+    <link href="bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand text-danger fw-bold" href="index.html">KerjaDi</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="main.html">Office</a></li>
+                </ul>
+                <div class="dropdown">
+                    <button class="btn btn-light border rounded-pill" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="bi bi-list"></i>
+                        <i class="bi bi-person-circle fs-5 ms-2"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li id="user-menu-items"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+  
+    <div class="container my-5">
+        <h2 class="mb-4">Dasbor Pemilik</h2>
+
+        <div class="row g-4 mb-5">
+            <div class="col-md-6 col-lg-3">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Total Pesanan</h6>
+                        <h2 class="card-title" id="total-owner-bookings">...</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Pendapatan Kotor</h6>
+                        <h2 class="card-title" id="total-gross-revenue">...</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Potongan Biaya Admin</h6>
+                        <h2 class="card-title text-danger" id="total-admin-fee">...</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="card text-center h-100">
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted">Pendapatan Bersih</h6>
+                        <h2 class="card-title text-success" id="total-net-revenue">...</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="nav nav-tabs mb-4" id="ownerTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="my-offices-tab" data-bs-toggle="tab" data-bs-target="#my-offices"
+                    type="button" role="tab">Kelola Kantor</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="bookings-tab" data-bs-toggle="tab" data-bs-target="#bookings" type="button"
+                    role="tab">Pesanan Masuk</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="ownerTabContent">
+            <div class="tab-pane fade show active" id="my-offices" role="tabpanel">
+                <div class="row g-4">
+                    <div class="col-lg-5">
+                        <div class="card sticky-top" style="top: 20px;">
+                            <div class="card-header">
+                                <h5>Tambah Kantor Baru</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="add-office-form">
+                                    <div class="mb-3"><label for="title" class="form-label">Nama Kantor</label><input
+                                            type="text" class="form-control" id="title" required></div>
+                                    <div class="mb-3"><label for="address" class="form-label">Alamat
+                                            Lengkap</label><input type="text" class="form-control" id="address"
+                                            required></div>
+                                    <div class="mb-3"><label for="city" class="form-label">Kota</label><input
+                                            type="text" class="form-control" id="city" required></div>
+
+                                    <div class="d-grid gap-2 mb-3">
+                                        <button type="button" id="search-address-btn"
+                                            class="btn btn-outline-secondary">Tentukan Lokasi di Peta</button>
+                                    </div>
+                                    <div id="add-map" style="height: 250px; margin-bottom: 1rem;" class="rounded"></div>
+
+                                    <input type="hidden" id="latitude">
+                                    <input type="hidden" id="longitude">
+
+                                    <div class="mb-3">
+                                        <label for="price" class="form-label">Harga per Hari</label>
+                                        <input type="number" class="form-control" id="price"
+                                            placeholder="Contoh: 500000 (tanpa Rp atau titik)" required>
+                                    </div>
+
+                                    <div class="mb-3"><label for="image" class="form-label">Upload Gambar
+                                            Kantor</label><input type="file" class="form-control" id="image"
+                                            accept="image/*" required multiple></div>
+                                    <div class="mb-3"><label for="description"
+                                            class="form-label">Deskripsi</label><textarea class="form-control"
+                                            id="description" rows="3" required></textarea></div>
+                                    <button type="submit" class="btn btn-danger w-100">Tambahkan Kantor</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-7">
+                        <h5>Daftar Kantor Milik Saya</h5>
+                        <div id="owner-offices-list" class="list-group"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="bookings" role="tabpanel">
+                <h5 class="mb-4">Riwayat Pesanan untuk Properti Anda</h5>
+                <div id="owner-bookings-history" class="list-group"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script>firebase.initializeApp(firebaseConfig);</script>
+
+    <script src="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+    <script
+        src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.js"></script>
+    <script src="js/chat.js"></script>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>

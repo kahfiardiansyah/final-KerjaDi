@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Kantor - KerjaDi Clone</title>
+    <link href="bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand text-danger fw-bold" href="index.html">KerjaDi</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="main.html">Office</a></li>
+                </ul>
+                <div class="dropdown">
+                    <button class="btn btn-light border rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-list"></i>
+                        <i class="bi bi-person-circle fs-5 ms-2"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li id="user-menu-items"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Edit Detail Kantor</h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="edit-office-form">
+                            <div class="mb-3">
+                                <label for="title" class="form-label">Nama Kantor</label>
+                                <input type="text" class="form-control" id="title" required>
+                            </div>
+                             <div class="mb-3">
+                                <label for="address" class="form-label">Alamat Lengkap</label>
+                                <input type="text" class="form-control" id="address" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="city" class="form-label">Kota</label>
+                                <input type="text" class="form-control" id="city" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Harga per Hari</label>
+                                <input type="text" class="form-control" id="price" placeholder="Contoh: Rp1.000.000/hari" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="image" class="form-label">Ubah Gambar Kantor (Kosongkan jika tidak ingin diubah)</label>
+                                <input type="file" class="form-control" id="image" accept="image/*">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Deskripsi</label>
+                                <textarea class="form-control" id="description" rows="3" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-danger w-100">Simpan Perubahan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-storage-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script>firebase.initializeApp(firebaseConfig);</script>
+    
+    <script src="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

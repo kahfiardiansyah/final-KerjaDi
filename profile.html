@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - KerjaDi Clone</title>
+    <link href="bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand text-danger fw-bold" href="index.html">KerjaDi</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="main.html">Office</a></li>
+                </ul>
+                <div class="dropdown">
+                    <button class="btn btn-light border rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-list"></i>
+                        <i class="bi bi-person-circle fs-5 ms-2"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" id="user-menu-items">
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h2 class="mb-4">Profil Saya</h2>
+
+        <ul class="nav nav-tabs" id="profileTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="profile-details-tab" data-bs-toggle="tab" data-bs-target="#profile-details" type="button" role="tab">Profil</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="saved-tab" data-bs-toggle="tab" data-bs-target="#saved" type="button" role="tab">Tersimpan</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab">Riwayat</button>
+            </li>
+        </ul>
+
+        <div class="tab-content pt-4" id="profileTabContent">
+            <div class="tab-pane fade show active" id="profile-details" role="tabpanel">
+                <div class="text-center">
+                    <img id="profile-picture" src="https://via.placeholder.com/150" class="rounded-circle mb-3" alt="Foto Profil" style="width: 150px; height: 150px; object-fit: cover;">
+                    <h3 id="profile-name">Memuat nama...</h3>
+                    <p class="text-muted" id="profile-email">Memuat email...</p>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                        <i class="bi bi-pencil-square me-2"></i>Edit Profil
+                    </button>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="saved" role="tabpanel">
+                <h4>Kantor yang Anda Simpan</h4>
+                <div id="saved-items-container" class="row mt-4 g-4">
+                    </div>
+            </div>
+
+            <div class="tab-pane fade" id="history" role="tabpanel">
+                <h4>Riwayat Penyewaan Anda</h4>
+                <div id="history-list-container" class="mt-4">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Edit Profil</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="edit-profile-form">
+                        <div class="mb-3">
+                            <label for="edit-name" class="form-label">Nama</label>
+                            <input type="text" class="form-control" id="edit-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit-picture" class="form-label">Ganti Foto Profil (Opsional)</label>
+                            <input class="form-control" type="file" id="edit-picture" accept="image/*">
+                        </div>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script>firebase.initializeApp(firebaseConfig);</script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

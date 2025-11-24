@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Kantor - KerjaDi Clone</title>
+    <link href="bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container">
+            <a class="navbar-brand text-danger fw-bold" href="index.html">KerjaDi</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="main.html">Office</a></li>
+                </ul>
+                <div class="dropdown">
+                    <button class="btn btn-light border rounded-pill" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-list"></i>
+                        <i class="bi bi-person-circle fs-5 ms-2"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li id="user-menu-items"></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div id="details-content" class="row">
+            <div class="col-12 text-center mt-5">
+                <div class="spinner-border text-danger" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Loading details...</p>
+            </div>
+        </div>
+        
+        <div class="mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <h3>Lokasi di Peta</h3>
+                <a id="gmaps-direction-btn" href="#" target="_blank" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-pin-map-fill me-2"></i>Arahkan ke Google Maps
+                </a>
+            </div>
+            <div id="map" style="height: 400px;" class="rounded-3"></div>
+        </div>
+
+        <hr class="my-5">
+
+        <div class="row">
+            <div class="col-12">
+                <h3 class="mb-3">Ulasan Pengguna</h3>
+                
+                <div class="card mb-4" id="review-form-container">
+                    <div class="card-body">
+                        <h5 class="card-title">Bagikan Pengalaman Anda</h5>
+                        <form id="add-review-form">
+                            <div class="mb-3">
+                                <label class="form-label">Rating Anda</label>
+                                <div id="rating-input" class="fs-3" style="cursor: pointer;">
+                                    <i class="bi bi-star text-secondary" data-value="1"></i>
+                                    <i class="bi bi-star text-secondary" data-value="2"></i>
+                                    <i class="bi bi-star text-secondary" data-value="3"></i>
+                                    <i class="bi bi-star text-secondary" data-value="4"></i>
+                                    <i class="bi bi-star text-secondary" data-value="5"></i>
+                                </div>
+                                <input type="hidden" id="rating-value" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="review-text" class="form-label">Ulasan Anda</label>
+                                <textarea id="review-text" class="form-control" rows="3" placeholder="Ceritakan pengalaman Anda di sini..." required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-danger">Kirim Ulasan</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div id="reviews-list">
+                    <div class="text-center">
+                        <div class="spinner-border text-secondary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-2">Memuat ulasan...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script>firebase.initializeApp(firebaseConfig);</script>
+
+    <script src="js/chat.js"></script>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

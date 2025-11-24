@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk atau Daftar - KerjaDi Clone</title>
+    <link href="bootstrap-5.3.8-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="card p-4 shadow-sm" style="width: 100%; max-width: 400px;">
+
+            <div id="loginBox">
+                <h3 class="card-title text-center mb-4">Selamat Datang Kembali</h3>
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="loginEmail" class="form-label">Alamat Email</label>
+                        <input type="email" class="form-control" id="loginEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Kata Sandi</label>
+                        <input type="password" class="form-control" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-danger w-100">Masuk</button>
+                </form>
+                <p class="text-center mt-3">
+                    Belum punya akun? <a href="#" id="showRegister">Daftar di sini</a>
+                </p>
+            </div>
+
+            <div id="registerBox" style="display: none;">
+                <h3 class="card-title text-center mb-4">Buat Akun Anda</h3>
+                <form id="registrationForm">
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nama Lengkap</label>
+                        <input type="text" class="form-control" id="name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerEmail" class="form-label">Alamat Email</label>
+                        <input type="email" class="form-control" id="registerEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="registerPassword" class="form-label">Kata Sandi</label>
+                        <input type="password" class="form-control" id="registerPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-danger w-100">Daftar</button>
+                </form>
+                <p class="text-center mt-3">
+                    Sudah punya akun? <a href="#" id="showLogin">Masuk di sini</a>
+                </p>
+            </div>
+
+        </div>
+    </div>
+    
+    <script src="bootstrap-5.3.8-dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+    
+    <script src="js/firebase-config.js"></script>
+    
+    <script>
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
