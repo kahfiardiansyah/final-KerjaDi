@@ -1,0 +1,544 @@
+/* Hapus semua styling lama jika ada, ganti dengan ini */
+
+/* Gaya untuk judul di halaman host */
+.host-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    /* Super tebal */
+    max-width: 600px;
+    /* Batasi lebar agar tidak terlalu panjang */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Styling untuk Card di Halaman Utama (biarkan ini untuk main.html) */
+.card-img-top {
+    aspect-ratio: 1 / 0.8;
+    object-fit: cover;
+}
+
+.card:hover {
+    transform: scale(1.03);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* ============== STYLE UNTUK HALAMAN CHAT ============== */
+
+/* Kontainer untuk setiap baris pesan (mengatur perataan kiri/kanan) */
+.message {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+/* Gelembung (bubble) untuk setiap pesan */
+.message-bubble {
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 70%;
+    line-height: 1.4;
+}
+
+.message-author {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.85rem;
+}
+
+.message-text {
+    margin-bottom: 5px;
+    /* Agar teks yang sangat panjang tidak keluar dari bubble */
+    word-wrap: break-word;
+}
+
+.message-time {
+    font-size: 0.75rem;
+    text-align: right;
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+.message-received {
+    justify-content: flex-start;
+}
+
+.message-received .message-bubble {
+    background-color: #f1f0f0;
+    border-bottom-left-radius: 5px;
+}
+
+.message-received .message-author {
+    color: #495057;
+}
+
+
+.message-sent {
+    justify-content: flex-end;
+}
+
+.message-sent .message-bubble {
+    background-color: #dcf8c6;
+
+    border-bottom-right-radius: 5px;
+}
+
+
+.experience-card {
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+    background-color: #fff;
+    border-radius: 12px;
+}
+
+.experience-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.experience-card .card-img-top {
+    border-radius: 12px 12px 0 0;
+}
+
+.navbar {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.booking-card.position-sticky {
+    top: 20px;
+}
+
+/* CSS untuk galeri foto */
+.gallery-main-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.gallery-thumb-img {
+    width: 100%;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.gallery-thumb-img:hover,
+.gallery-thumb-img.active {
+    opacity: 1;
+}
+
+/* ========================================================================= */
+/* STYLE UNTUK FITUR CHAT                                                    */
+/* ========================================================================= */
+
+/* Container Halaman Chat */
+.chat-page-container {
+    height: calc(100vh - 70px);
+    /* Tinggi viewport dikurangi tinggi navbar */
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-card {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    /* Penting agar body bisa di-scroll */
+}
+
+/* Header Chat */
+.chat-card .card-header {
+    background-color: #fff;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Body (tempat pesan) */
+#chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background-color: #f8f9fa;
+}
+
+/* Bubble Pesan */
+.chat-bubble {
+    max-width: 75%;
+    padding: 0.75rem 1.2rem;
+    border-radius: 1.25rem;
+    word-wrap: break-word;
+    line-height: 1.4;
+}
+
+/* Bubble Pesan Terkirim (Kanan) */
+.chat-bubble.message-sent {
+    align-self: flex-end;
+    background-color: #0d6efd;
+    color: white;
+    border-bottom-right-radius: 0.25rem;
+}
+
+/* Bubble Pesan Diterima (Kiri) */
+.chat-bubble.message-received {
+    align-self: flex-start;
+    background-color: #e9ecef;
+    color: #212529;
+    border-bottom-left-radius: 0.25rem;
+}
+
+.message-time {
+    display: block;
+    font-size: 0.75rem;
+    margin-top: 5px;
+    text-align: right;
+    opacity: 0.8;
+}
+
+.chat-bubble.message-received .message-time {
+    text-align: left;
+}
+
+/* Footer (Form Input) */
+.chat-card .card-footer {
+    background-color: #fff;
+    border-top: 1px solid #e9ecef;
+}
+
+#chat-form .form-control {
+    border-radius: 2rem;
+}
+
+#chat-form .btn {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+}
+
+/* Style untuk Halaman Inbox */
+#inbox-list-container .list-group-item {
+    transition: background-color 0.2s ease-in-out;
+}
+
+#inbox-list-container .list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+#inbox-list-container .list-group-item.list-group-item-light.fw-bold {
+    background-color: #e7f5ff;
+}
+
+/* Style untuk tombol chat */
+.btn-hover-effect:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+#chat-with-owner-btn {
+    border: 2px solid #F90101;
+    font-weight: 600;
+    padding: 10px;
+}
+
+/* Style untuk tombol chat danger */
+#chat-with-owner-btn {
+    border: 2px solid #dc3545;
+    font-weight: 600;
+    padding: 10px;
+    color: #dc3545;
+    transition: all 0.3s ease;
+}
+
+#chat-with-owner-btn:hover {
+    background-color: #dc3545;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+/* Untuk tombol solid danger */
+.btn-danger#chat-with-owner-btn:hover {
+    background-color: #bb2d3b;
+    border-color: #b02a37;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+}
+
+.btn-hover-effect:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+    transition: all 0.3s ease;
+}
+
+/* Chat Styles */
+.chat-bubble {
+    max-width: 70%;
+    padding: 12px 16px;
+    margin: 8px 0;
+    border-radius: 18px;
+    position: relative;
+    word-wrap: break-word;
+}
+
+.message-sent {
+    background-color: #007bff;
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 4px;
+}
+
+.message-received {
+    background-color: #f1f1f1;
+    color: #333;
+    margin-right: auto;
+    border-bottom-left-radius: 4px;
+}
+
+.message-time {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-top: 4px;
+}
+
+.message-text {
+    margin-bottom: 2px;
+}
+
+#chat-messages {
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+#chat-header {
+    padding: 15px 20px;
+    background-color: white;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Inbox Empty State Styles */
+.text-muted i.bi {
+    opacity: 0.3;
+}
+
+.list-group-item {
+    transition: all 0.2s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(2px);
+}
+
+.badge.bg-secondary {
+    font-size: 0.7rem;
+    padding: 0.25em 0.4em;
+}
+
+/* Chat specific styles */
+#chat-messages {
+    scroll-behavior: smooth;
+}
+
+.message-text {
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+/* Custom scrollbar for chat */
+#chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+#chat-messages::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+#chat-messages::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+#chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Loading animation */
+.spinner-border {
+    animation: spinner-border 0.75s linear infinite;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #chat-messages {
+        height: 50vh !important;
+    }
+
+    .container.my-4 {
+        margin-top: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+}
+
+/* ========================================================================= */
+/* CARD HOVER EFFECTS - TAMBAHKAN DI CSS ANDA */
+/* ========================================================================= */
+
+.office-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border: 1px solid #e9ecef !important;
+}
+
+.office-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+    border-color: #ff2c2c !important;
+}
+
+/* Efek untuk gambar dalam card */
+.office-card .card-img-top {
+    transition: all 0.4s ease;
+}
+
+.office-card:hover .card-img-top {
+    transform: scale(1.03);
+}
+
+/* Efek untuk tombol save di card */
+.save-btn {
+    transition: all 0.3s ease;
+    opacity: 0.8;
+}
+
+.office-card:hover .save-btn {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Efek untuk teks dalam card */
+.office-card .card-body {
+    transition: all 0.3s ease;
+}
+
+.office-card:hover .card-body {
+    transform: translateY(-2px);
+}
+
+/* Smooth transition untuk semua element */
+.experience-card {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.experience-card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(0, 123, 255, 0.1);
+}
+
+/* Efek khusus untuk mobile (tap) */
+@media (max-width: 768px) {
+    .office-card:active {
+        transform: translateY(-4px) scale(1.01);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+}
+
+/* Animation untuk loading state (bonus) */
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.office-card {
+    animation: cardEntrance 0.6s ease-out;
+}
+
+/* Stagger animation untuk card berurutan */
+.office-card:nth-child(1) { animation-delay: 0.1s; }
+.office-card:nth-child(2) { animation-delay: 0.2s; }
+.office-card:nth-child(3) { animation-delay: 0.3s; }
+.office-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* SOLUSI CEPAT - PAKAI INI SAJA */
+.card-body.px-0 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+/* Atau override class Bootstrap */
+.px-0 {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+/* Style untuk admin view mode */
+.admin-view-mode {
+    border-left: 4px solid #ff2c2c;
+    background-color: #fffbf0;
+}
+
+.admin-badge {
+    background: linear-gradient(45deg, #ff2c2c, #ff2c2c);
+    color: #000;
+    font-weight: bold;
+    font-size: 0.7em;
+}
+
+.btn-admin-disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+    border: 2px dashed #6c757d;
+}
+
+/* Highlight untuk elemen yang view-only */
+.view-only-highlight {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 1px solid #dee2e6;
+}
+.admin-view-only {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.admin-view-only:hover {
+    opacity: 0.7;
+}
+
+/* Tambahkan di CSS */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-card {
+  height: 200px;
+  border-radius: 12px;
+}
+
+.skeleton-text {
+  height: 16px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
