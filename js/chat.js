@@ -602,129 +602,113 @@ function createMessageElement(message, currentUserId) {
     return messageDiv;
 }
 
-function renderBookingDetail(booking, bookingId, renterData) {
-    console.log('🎨 Rendering booking detail');
+function setupMessageSystem(chatRef, currentUserId, chatData) {
+    console.log('🔧 Setting up message system...');
+    
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-message-btn');
 
-    // Format tanggal
-    const checkInDate = new Date(booking.checkIn).toLocaleDateString('id-ID', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    });
-    const checkOutDate = new Date(booking.checkOut).toLocaleDateString('id-ID', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    });
+    console.log('Message input found:', !!messageInput);
+    console.log('Send button found:', !!sendButton);
+    console.log('Chat ref:', chatRef);
+    console.log('Current user:', currentUserId);
+    console.log('Chat data:', chatData);
 
-    let bookingDate = 'Tanggal tidak tersedia';
-    if (booking.bookingTimestamp && booking.bookingTimestamp.toDate) {
-        bookingDate = new Date(booking.bookingTimestamp.toDate()).toLocaleDateString('id-ID', {
-            year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
-        });
+    if (!messageInput || !sendButton) {
+        console.error('❌ Message input or send button not found');
+        return;
     }
 
-    // Cek role user untuk menentukan tombol chat
-    const currentUser = firebase.auth().currentUser;
-    let chatButtonHTML = '';
+    // Enable input setelah system siap
+    messageInput.disabled = false;
+    messageInput.placeholder = "Ketik pesan...";
 
-    if (currentUser) {
-        const db = firebase.firestore();
-        db.collection('users').doc(currentUser.uid).get().then(userDoc => {
-            if (userDoc.exists) {
-                const userRole = userDoc.data().role;
-                
-                if (userRole === 'admin') {
-                    chatButtonHTML = `
-                        <button class="btn btn-outline-secondary mt-2" disabled>
-                            <i class="bi bi-eye me-1"></i>View Only (Admin)
-                        </button>
-                    `;
-                } else {
-                    chatButtonHTML = `
-                        <button class="btn btn-primary mt-2" onclick="getOrCreateChat('${booking.userId}')">
-                            <i class="bi bi-chat-dots-fill me-1"></i>Chat dengan Penyewa
-                        </button>
-                    `;
+    messageInput.addEventListener('input', function () {
+        const text = this.value.trim();
+        sendButton.disabled = !text;
+        console.log('Input changed, text:', text, 'disabled:', !text);
+    });
+
+    function sendMessage() {
+        const text = messageInput.value.trim();
+        console.log('📤 Attempting to send message:', text);
+
+        if (!text) {
+            console.log('❌ Message empty');
+            showToast('Pesan tidak boleh kosong', 'warning');
+            return;
+        }
+
+        setSendingState(true);
+
+        const messageData = {
+            text: text,
+            senderId: currentUserId,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        console.log('📝 Message data:', messageData);
+
+        chatRef.collection('messages').add(messageData)
+            .then(() => {
+                console.log('✅ Message sent successfully');
+
+                const otherUserId = chatData.participants.find(id => id !== currentUserId);
+                console.log('Other user ID:', otherUserId);
+
+                const updateData = {
+                    lastMessage: text.length > 50 ? text.substring(0, 50) + '...' : text,
+                    lastMessageTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    lastMessageSenderId: currentUserId
+                };
+
+                if (otherUserId) {
+                    updateData[`unreadCount.${otherUserId}`] = firebase.firestore.FieldValue.increment(1);
                 }
 
-                // Update tombol chat setelah menentukan role
-                const chatButtonContainer = document.querySelector('.chat-button-container');
-                if (chatButtonContainer) {
-                    chatButtonContainer.innerHTML = chatButtonHTML;
-                }
-            }
-        });
+                console.log('📝 Update data:', updateData);
+                return chatRef.update(updateData);
+            })
+            .then(() => {
+                console.log('✅ Chat document updated');
+                messageInput.value = '';
+                messageInput.focus();
+            })
+            .catch(error => {
+                console.error('❌ Error sending message:', error);
+                showToast('Gagal mengirim pesan: ' + error.message, 'error');
+            })
+            .finally(() => {
+                setSendingState(false);
+            });
     }
 
-    const detailHTML = `
-        <div class="row">
-            <div class="col-12">
-                <div class="card mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h4 class="mb-0"><i class="bi bi-receipt me-2"></i>Detail Pesanan - ${booking.title || 'Tidak ada judul'}</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3 text-center">
-                                <img src="${booking.image || ''}" class="img-fluid rounded" alt="${booking.title || ''}" style="max-height: 200px; object-fit: cover;">
-                            </div>
-                            <div class="col-md-9">
-                                <h5>${booking.title || 'Tidak ada judul'}</h5>
-                                <p class="text-muted"><i class="bi bi-geo-alt-fill me-1"></i> ${booking.location || booking.city || 'Lokasi tidak tersedia'}</p>
-                                <p class="mb-2"><strong>ID Pesanan:</strong> <code>${bookingId}</code></p>
-                                <p class="mb-2"><strong>Tanggal Pemesanan:</strong> ${bookingDate}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    function setSendingState(isSending) {
+        messageInput.disabled = isSending;
+        sendButton.disabled = isSending;
+        sendButton.innerHTML = isSending ?
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>' :
+            '<i class="bi bi-send-fill"></i>';
+        console.log('Sending state:', isSending);
+    }
 
-        <div class="row">
-            <div class="col-md-8">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="mb-0"><i class="bi bi-calendar-event me-2"></i>Detail Penyewaan</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p><strong><i class="bi bi-calendar-check me-2"></i>Check-in:</strong><br>${checkInDate}</p>
-                                <p><strong><i class="bi bi-calendar-x me-2"></i>Check-out:</strong><br>${checkOutDate}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p><strong><i class="bi bi-clock me-2"></i>Durasi:</strong><br>${booking.duration || 0} hari</p>
-                                <p><strong><i class="bi bi-info-circle me-2"></i>Status:</strong><br><span class="badge bg-success fs-6">LUNAS</span></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    sendButton.addEventListener('click', sendMessage);
+    messageInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            console.log('Enter pressed, sending message');
+            sendMessage();
+        }
+    });
 
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0"><i class="bi bi-person me-2"></i>Informasi Penyewa</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p><strong>Nama Lengkap:</strong><br>${renterData.name}</p>
-                                <p><strong>Email:</strong><br>${renterData.email}</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p><strong>Telepon:</strong><br>${booking.renterPhone || 'Tidak tersedia'}</p>
-                                <div class="chat-button-container">
-                                    <!-- Tombol chat akan diisi secara dinamis -->
-                                    ${chatButtonHTML}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    setTimeout(() => {
+        if (messageInput) {
+            messageInput.focus();
+            console.log('🎯 Message input focused');
+        }
+    }, 1000);
 
-            <!-- ... sisa kode tetap sama ... -->
-        </div>
-    `;
-
-    container.innerHTML = detailHTML;
-    console.log('✅ Booking detail rendered successfully');
+    console.log('✅ Message system setup complete');
 }
 
 function showChatLoading() {
