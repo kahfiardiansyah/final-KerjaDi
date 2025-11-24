@@ -251,6 +251,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const userMenuItems = document.getElementById('user-menu-items');
     if (userMenuItems) {
         auth.onAuthStateChanged(user => {
+        console.log('🔐 Auth state changed:', user ? 'Logged in' : 'Not logged in');
+
             if (user) {
                 const userRef = db.collection('users').doc(user.uid);
                 userRef.get().then(doc => {
@@ -1199,7 +1201,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             const apiKey = '5e43898d4fb8147933d7b891113c23fc';
                             const formData = new FormData();
                             formData.append('image', newPictureFile);
-                            fetch(`http://api.imgbb.com/1/upload?key=${apiKey}`, { method: 'POST', body: formData })
+                            fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, { method: 'POST', body: formData })
                                 .then(response => response.json())
                                 .then(result => {
                                     if (result.success) {
@@ -1763,7 +1765,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             const formData = new FormData();
                             formData.append('image', processedFile);
 
-                            const uploadPromise = fetch(`http://api.imgbb.com/1/upload?key=${apiKey}`, {
+                            const uploadPromise = fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
                                 method: 'POST',
                                 body: formData
                             })
@@ -2014,7 +2016,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     submitButton.textContent = 'Mengupload Gambar Baru...';
                     const formData = new FormData();
                     formData.append('image', newImageFile);
-                    fetch(`http://api.imgbb.com/1/upload?key=${apiKey}`, {
+                    fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
                         method: 'POST',
                         body: formData
                     })
